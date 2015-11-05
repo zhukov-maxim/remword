@@ -14,8 +14,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "dev": "WEBPACK_ENV=dev ./node_modules/.bin/webpack --watch --inline",
-    "build": "WEBPACK_ENV=build ./node_modules/.bin/webpack"
+    "dev": "WEBPACK_ENV=dev ./node_modules/.bin/webpack --watch --inline --progress --colors",
+    "build": "WEBPACK_ENV=build ./node_modules/.bin/webpack --progress --colors"
   },
   "devDependencies": {
     "babel-core": "5.8.24",

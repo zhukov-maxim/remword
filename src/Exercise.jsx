@@ -1,20 +1,37 @@
 import React from 'react';
+import ReactFireMixin from 'reactfire';
+import Firebase from 'firebase';
+
+import Spinner from './Spinner';
 
 var Exercise = React.createClass({
   displayName: 'Exercise',
 
-  propTypes: {
-    items: React.PropTypes.arrayOf(Object).isRequired
-  },
+  mixins: [ReactFireMixin],
 
   getInitialState: function () {
     return {
+      exerciseStarted: false,
+      items: [],
       question: null,
       answers: []
     };
   },
 
   componentWillMount: function () {
+    var firebaseRef = new Firebase('https://remword.firebaseio.com/words/');
+
+    this.bindAsArray(firebaseRef, 'items');
+
+    // Fires after all array elements are loaded:
+    firebaseRef.on('value', this.handleDataLoaded);
+  },
+
+  handleDataLoaded: function () {
+    this.startExercise();
+  },
+
+  startExercise: function () {
     var answers = [];
 
     answers[0] = 0;
@@ -24,10 +41,11 @@ var Exercise = React.createClass({
 
     this.setState({answers: answers});
     this.setState({question: answers[3]});
+    this.setState({exerciseStarted: true});
   },
 
   validateAnswer: function (i) {
-    i === this.state.question ? alert('Yep!') : alert('Nope.');
+    i === this.state.question ? console.info('Yep!') : console.log('Nope.');
   },
 
   render: function () {
@@ -37,17 +55,25 @@ var Exercise = React.createClass({
           key={i}
           onClick={this.validateAnswer.bind(this, i)}
         >
-          {this.props.items[i].translation}
+          {this.state.items[i].translation}
         </button>
       );
     };
 
-    return (
-      <div className = 'exercise'>
-        <h3>{'Your question: '}{this.props.items[this.state.question].name}</h3>
-        {this.state.answers.map(createAnswerButton)}
-      </div>
-    );
+    var exercise;
+
+    if (!this.state.exerciseStarted) {
+      exercise = <Spinner />;
+    } else {
+      exercise = (
+        <div className = 'exercise'>
+          <h3>{'Your question: '}{this.state.items[this.state.question].name}</h3>
+          {this.state.answers.map(createAnswerButton)}
+        </div>
+      );
+    }
+
+    return exercise;
   }
 });
 
