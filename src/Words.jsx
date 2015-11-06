@@ -18,7 +18,7 @@ var Words = React.createClass({
   },
 
   componentWillMount: function () {
-    var path = 'https://remword.firebaseio.com/' + 'users/' + firebaseUtils.getUid() + '/' + 'words/';
+    var path = 'https://remword.firebaseio.com/users/' + firebaseUtils.getUid() + '/words/';
     var firebaseRef = new Firebase(path);
 
     this.bindAsArray(firebaseRef, 'items');
@@ -52,14 +52,27 @@ var Words = React.createClass({
     });
   },
 
+  deleteItem: function (key) {
+    var path = 'https://remword.firebaseio.com/users/' + firebaseUtils.getUid() + '/words/';
+    var firebaseRef = new Firebase(path);
+
+    firebaseRef.child(key).remove();
+  },
+
   render: function () {
-    var createItem = function (item, index) {
+    var createItem = (item, index) => {
       return (
         <li
           className = 'word'
           key = {index}
         >
-          {item.name} {' - '} {item.translation}
+          {item.name} - {item.translation}
+          <button
+            key = {index}
+            onClick = {this.deleteItem.bind(null, item['.key'])}
+          >
+            X
+          </button>
         </li>
       );
     };
