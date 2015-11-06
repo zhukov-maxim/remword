@@ -6,7 +6,7 @@ var cachedUser = null;
 var addNewUserToFB = function (newUser) {
   var key = newUser.uid;
 
-  ref.child('user').child(key).set(newUser);
+  ref.child('users').child(key).set(newUser);
 };
 
 var firebaseUtils = {
@@ -52,6 +52,18 @@ var firebaseUtils = {
 
   isLoggedIn: function () {
     return cachedUser && true || ref.getAuth() || false;
+  },
+
+  getUserEmail: function () {
+    if (cachedUser) {
+      return cachedUser.email;
+    }
+  },
+
+  getUid: function () {
+    if (cachedUser) {
+      return cachedUser.uid;
+    }
   },
 
   logout: function () {

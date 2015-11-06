@@ -2,6 +2,8 @@ import React from 'react';
 import ReactFireMixin from 'reactfire';
 import Firebase from 'firebase';
 
+import firebaseUtils from './utils/firebaseUtils';
+
 import Spinner from './Spinner';
 
 var Exercise = React.createClass({
@@ -20,7 +22,9 @@ var Exercise = React.createClass({
   },
 
   componentWillMount: function () {
-    this.state.firebaseRef = new Firebase('https://remword.firebaseio.com/words/');
+    var path = 'https://remword.firebaseio.com/' + 'users/' + firebaseUtils.getUid() + '/' + 'words/';
+
+    this.state.firebaseRef = new Firebase(path);
 
     this.bindAsArray(this.state.firebaseRef, 'items');
 

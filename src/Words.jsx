@@ -2,6 +2,8 @@ import React from 'react';
 import ReactFireMixin from 'reactfire';
 import Firebase from 'firebase';
 
+import firebaseUtils from './utils/firebaseUtils';
+
 var Words = React.createClass({
   displayName: 'Words',
 
@@ -16,7 +18,8 @@ var Words = React.createClass({
   },
 
   componentWillMount: function () {
-    var firebaseRef = new Firebase('https://remword.firebaseio.com/words/');
+    var path = 'https://remword.firebaseio.com/' + 'users/' + firebaseUtils.getUid() + '/' + 'words/';
+    var firebaseRef = new Firebase(path);
 
     this.bindAsArray(firebaseRef, 'items');
   },
