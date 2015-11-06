@@ -11,6 +11,7 @@ var Exercise = React.createClass({
 
   getInitialState: function () {
     return {
+      firebaseRef: null,
       exerciseStarted: false,
       items: [],
       question: null,
@@ -19,12 +20,16 @@ var Exercise = React.createClass({
   },
 
   componentWillMount: function () {
-    var firebaseRef = new Firebase('https://remword.firebaseio.com/words/');
+    this.state.firebaseRef = new Firebase('https://remword.firebaseio.com/words/');
 
-    this.bindAsArray(firebaseRef, 'items');
+    this.bindAsArray(this.state.firebaseRef, 'items');
 
     // Fires after all array elements are loaded:
-    firebaseRef.on('value', this.handleDataLoaded);
+    this.state.firebaseRef.on('value', this.handleDataLoaded);
+  },
+
+  componentWillUnmount: function () {
+    this.state.firebaseRef.off('value');
   },
 
   handleDataLoaded: function () {
