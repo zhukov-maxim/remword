@@ -44,8 +44,8 @@ var Words = React.createClass({
       translation: this.state.newWordTranslation
     });
     this.setState({
-      name: '',
-      translation: ''
+      newWordName: '',
+      newWordTranslation: ''
     });
   },
 
