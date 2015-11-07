@@ -61,6 +61,7 @@ var Exercise = React.createClass({
     var createAnswerButton = i => {
       return (
         <button
+          className='exercise__button'
           key={i}
           onClick={this.validateAnswer.bind(this, i)}
         >
@@ -76,7 +77,7 @@ var Exercise = React.createClass({
     } else {
       exercise = (
         <div className = 'exercise'>
-          <h3>{'Your question: '}{this.state.items[this.state.question].name}</h3>
+          <h1 className='exercise__question'>{this.state.items[this.state.question].name}</h1>
           {this.state.answers.map(createAnswerButton)}
         </div>
       );

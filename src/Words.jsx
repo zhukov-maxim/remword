@@ -68,10 +68,11 @@ var Words = React.createClass({
         >
           {item.name} - {item.translation}
           <button
+            className = 'button-remove'
             key = {index}
             onClick = {this.deleteItem.bind(null, item['.key'])}
           >
-            X
+            &#10006;
           </button>
         </li>
       );
@@ -87,13 +88,13 @@ var Words = React.createClass({
           />
           <input
             onChange = {this.onChangeTranslation}
-            placeholder = 'Enter translation word here...'
+            placeholder = 'Enter translation here...'
             value = {this.state.newWordTranslation}
           />
-          <button>{'Add word'}</button>
+          <button className='button-full'>{'Add word'}</button>
         </form>
-        <hr />
-        <ul>{this.state.items.map(createItem)}
+        <ul className='words-list'>
+          {this.state.items.map(createItem)}
         </ul>
       </div>
     );

@@ -1,14 +1,15 @@
-var webpack = require('webpack');
-var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
-var env = process.env.WEBPACK_ENV;
-var WebpackDevServer = require('webpack-dev-server');
 var path = require('path');
+var webpack = require('webpack');
+var WebpackDevServer = require('webpack-dev-server');
+var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var appName = 'app';
+var appName = 'remword';
 var host = '0.0.0.0';
 var port = '9000';
+var env = process.env.WEBPACK_ENV;
 
-var plugins = [], outputFile;
+var plugins = [new ExtractTextPlugin('styles.css')], outputFile;
 
 if (env === 'build') {
   plugins.push(new UglifyJsPlugin({ minimize: true }));
@@ -21,21 +22,31 @@ var config = {
   entry: './src/index.js',
   devtool: 'source-map',
   output: {
-    path: __dirname + '/lib',
     filename: outputFile,
-    publicPath: __dirname + '/example'
+    path: __dirname + '/public'
   },
   module: {
     loaders: [
       {
         test: /(\.jsx|\.js)$/,
         loader: 'babel',
-        exclude: /(node_modules|bower_components)/
+        exclude: /node_modules/
       },
       {
         test: /(\.jsx|\.js)$/,
         loader: 'eslint-loader',
         exclude: /node_modules/
+      },
+      {
+        test: /\.css$/,
+        loader: 'style!css'
+      },
+      {
+        test: /\.less$/,
+        loader: ExtractTextPlugin.extract(
+          // activate source maps via loader query
+          'css?sourceMap!' + 'less?sourceMap'
+        )
       }
     ]
   },
@@ -48,7 +59,7 @@ var config = {
 
 if (env === 'dev') {
   new WebpackDevServer(webpack(config), {
-    contentBase: './example',
+    contentBase: 'public',
     historyApiFallback: true, // Allows to navigate to specific route from url
     hot: true,
     debug: true

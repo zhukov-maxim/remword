@@ -9,7 +9,12 @@ var Logout = React.createClass({
   },
 
   render: function () {
-    return <p>You are now logged out</p>;
+    return (
+      <div>
+        <h1 className='auth__header'>You are now logged out</h1>
+        <p>We hope to see you soon.</p>
+      </div>
+    );
   }
 });
 

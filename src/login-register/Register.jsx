@@ -21,15 +21,15 @@ var Register = React.createClass({
 
   render: function () {
     return (
-      <div>
-        <h1>Register</h1>
+      <div className='auth'>
+        <h1 className='auth__header'>Register</h1>
         <form onSubmit={this.handleSubmit}>
           <div>
-            <label>Email</label>
+            <label>Email:</label>
             <input ref='email' placeholder='Email'/>
           </div>
           <div>
-            <label>Password</label>
+            <label>Password:</label>
             <input ref='pw' type='password' placeholder='Password' />
           </div>
           <button type='submit'>Login</button>

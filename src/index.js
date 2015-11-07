@@ -5,8 +5,7 @@ import { IndexRoute, Router, Route } from 'react-router';
 import history from './utils/history';
 import firebaseUtils from './utils/firebaseUtils';
 
-import App from './App';
-import About from './About';
+import Remword from './Remword';
 import Dashboard from './Dashboard';
 import Exercise from './Exercise';
 import Words from './Words';
@@ -28,11 +27,10 @@ function clearAttemptedTransition() {
 
 render((
   <Router history={history}>
-    <Route path='/' component={App}>
+    <Route path='/' component={Remword}>
       <IndexRoute component={Dashboard} />
       <Route path='words' component={Words} onEnter={requireAuth} />
       <Route path='exercise' component={Exercise} onEnter={requireAuth} />
-      <Route path='about' component={About} />
       <Route path='login' component={Login} onLeave={clearAttemptedTransition} />
       <Route path='logout' component={Logout} />
       <Route path='register' component={Register} />
