@@ -15,7 +15,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "WEBPACK_ENV=dev ./node_modules/.bin/webpack --devtool eval --watch --inline --progress --colors",
-    "build": "WEBPACK_ENV=build ./node_modules/.bin/webpack --progress --colors"
+    "build": "WEBPACK_ENV=build ./node_modules/.bin/webpack --progress --colors",
+    "deploy": "npm run build && firebase deploy && firebase open"
   },
   "devDependencies": {
     "babel-core": "5.8.24",
