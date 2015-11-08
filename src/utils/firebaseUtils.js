@@ -51,7 +51,11 @@ var firebaseUtils = {
   },
 
   isLoggedIn: function () {
-    return cachedUser && true || ref.getAuth() || false;
+    if (!cachedUser) {
+      cachedUser = ref.getAuth();
+    }
+
+    return (cachedUser && true) || false;
   },
 
   getUserEmail: function () {
