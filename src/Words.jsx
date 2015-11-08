@@ -72,7 +72,7 @@ var Words = React.createClass({
             key = {index}
             onClick = {this.deleteItem.bind(null, item['.key'])}
           >
-            &#10006;
+          {String.fromCharCode(10006) /* Cross sign */ }
           </button>
         </li>
       );
@@ -91,7 +91,7 @@ var Words = React.createClass({
             placeholder = 'Enter translation here...'
             value = {this.state.newWordTranslation}
           />
-          <button className='button-full'>{'Add word'}</button>
+          <button className='button-full'>Add word</button>
         </form>
         <ul className='words-list'>
           {this.state.items.map(createItem)}
