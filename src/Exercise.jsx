@@ -3,6 +3,7 @@ import ReactFireMixin from 'reactfire';
 import Firebase from 'firebase';
 
 import firebaseUtils from './utils/firebaseUtils';
+import {shuffleArray, selectRandomIndexes} from './utils/commonUtils';
 
 import Spinner from './Spinner';
 
@@ -41,20 +42,27 @@ var Exercise = React.createClass({
   },
 
   startExercise: function () {
-    var answers = [];
+    const wordsNumber = this.state.items.length;
+    const answersNumber = 4;
 
-    answers[0] = 0;
-    answers[1] = 1;
-    answers[2] = 2;
-    answers[3] = 3;
+    let answers = selectRandomIndexes(0, wordsNumber - 1, answersNumber);
+    let question = shuffleArray(answers)[0];
 
     this.setState({answers: answers});
-    this.setState({question: answers[3]});
+    this.setState({question: question});
     this.setState({exerciseStarted: true});
   },
 
+  reshuffleAnswers: function () {
+    this.setState({answers: shuffleArray(this.state.answers)});
+  },
+
   validateAnswer: function (i) {
-    i === this.state.question ? console.info('Yep!') : console.log('Nope.');
+    if (i === this.state.question) {
+      this.startExercise();
+    } else {
+      this.reshuffleAnswers();
+    }
   },
 
   render: function () {
