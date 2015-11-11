@@ -7,7 +7,7 @@ var Dashboard = React.createClass({
     return (
       <div className = 'dashboard'>
         <h1 className='dashboard__header'>Welcome to the Remword</h1>
-        'Dashboard coming soon...'
+        Dashboard coming soon...
       </div>
     );
   }
