@@ -50,24 +50,32 @@ var firebaseUtils = {
     }.bind(this));
   },
 
+  cacheUser: function () {
+    cachedUser = ref.getAuth();
+  },
+
   isLoggedIn: function () {
     if (!cachedUser) {
-      cachedUser = ref.getAuth();
+      this.cacheUser();
     }
 
     return (cachedUser && true) || false;
   },
 
   getUserEmail: function () {
-    if (cachedUser) {
-      return cachedUser.email;
+    if (!cachedUser) {
+      this.cacheUser();
     }
+
+    return cachedUser.password.email;
   },
 
   getUid: function () {
-    if (cachedUser) {
-      return cachedUser.uid;
+    if (!cachedUser) {
+      this.cacheUser();
     }
+
+    return cachedUser.uid;
   },
 
   logout: function () {
