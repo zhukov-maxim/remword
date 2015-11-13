@@ -42,7 +42,12 @@ var Words = React.createClass({
       return;
     }
 
+    let currentTime = (new Date()).getTime(); // Firebase does not support Date objects
+
     this.firebaseRefs['items'].push({
+      date: currentTime,
+      hits: 0,
+      misses: 0,
       name: this.state.newWordName,
       translation: this.state.newWordTranslation
     });
