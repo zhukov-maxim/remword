@@ -30,7 +30,7 @@ var Exercise = React.createClass({
     this.bindAsArray(this.state.firebaseRef, 'items');
 
     // Fires after all array elements are loaded:
-    this.state.firebaseRef.on('value', this.handleDataLoaded);
+    this.state.firebaseRef.once('value', this.handleDataLoaded);
   },
 
   componentWillUnmount: function () {
@@ -59,8 +59,18 @@ var Exercise = React.createClass({
 
   validateAnswer: function (i) {
     if (i === this.state.question) {
+      const wordIndex = i;
+      const key = this.state.items[wordIndex]['.key'];
+      const hits = ++this.state.items[wordIndex].hits;
+
+      this.state.firebaseRef.child(key).update({ hits: hits });
       this.startExercise();
     } else {
+      const wordIndex = this.state.question;
+      const key = this.state.items[wordIndex]['.key'];
+      const misses = ++this.state.items[wordIndex].misses;
+
+      this.state.firebaseRef.child(key).update({ misses: misses });
       this.reshuffleAnswers();
     }
   },
