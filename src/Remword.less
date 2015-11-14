@@ -174,12 +174,31 @@ button {
   }
 }
 
-.words-list {
-  list-style: none;
-  padding: 0;
-  margin: 20px 0 0;
-  border-top: 2px solid #283033;
-  padding: 10px 0 0;
+.words {
+  &-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0;
+    border-top: 2px solid #283033;
+    padding: 10px 0 0;
+  }
+
+  &__button_translate {
+    display: block;
+    margin: 0 auto 15px;
+    background-color: #fbb55c;
+  }
+
+  &__powered-by {
+    display: block;
+    margin-bottom: 18px;
+    color: #283033;
+    text-decoration: none;
+
+    &:hover {
+      color: #283033;
+    }
+  }
 }
 
 .exercise {

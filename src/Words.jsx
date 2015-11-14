@@ -3,6 +3,7 @@ import ReactFireMixin from 'reactfire';
 import Firebase from 'firebase';
 
 import firebaseUtils from './utils/firebaseUtils';
+import { translate } from './utils/translation';
 
 var Words = React.createClass({
   displayName: 'Words',
@@ -13,7 +14,8 @@ var Words = React.createClass({
     return {
       items: [],
       newWordName: '',
-      newWordTranslation: ''
+      newWordTranslation: '',
+      translatedByYandex: false
     };
   },
 
@@ -29,7 +31,26 @@ var Words = React.createClass({
   },
 
   onChangeTranslation: function (e) {
-    this.setState({newWordTranslation: e.target.value});
+    this.setState({
+      newWordTranslation: e.target.value,
+      translatedByYandex: false
+    });
+  },
+
+  handleTranslate: function (e) {
+    e.preventDefault();
+
+    const word = this.state.newWordName;
+    const minimumWordLength = 2;
+
+    if (word && word.length >= minimumWordLength) {
+      translate(word, function (data) {
+        this.setState({
+          newWordTranslation: data,
+          translatedByYandex: true
+        });
+      }.bind(this));
+    }
   },
 
   handleSubmit: function (e) {
@@ -53,7 +74,8 @@ var Words = React.createClass({
     });
     this.setState({
       newWordName: '',
-      newWordTranslation: ''
+      newWordTranslation: '',
+      translatedByYandex: false
     });
   },
 
@@ -83,6 +105,15 @@ var Words = React.createClass({
       );
     };
 
+    var translatedByYandexNotification = (
+      <a
+        className='words__powered-by'
+        href='http://translate.yandex.com/'
+      >
+        Powered by Yandex.Translate
+      </a>
+    );
+
     return (
       <div className='words'>
         <form onSubmit = {this.handleSubmit}>
@@ -91,11 +122,18 @@ var Words = React.createClass({
             placeholder = 'Enter new word here...'
             value = {this.state.newWordName}
           />
+          <button
+            className = 'words__button_translate'
+            onClick = {this.handleTranslate}
+          >
+            Translate
+          </button>
           <input
             onChange = {this.onChangeTranslation}
             placeholder = 'Enter translation here...'
             value = {this.state.newWordTranslation}
           />
+          {this.state.translatedByYandex ? translatedByYandexNotification : false}
           <button className='button-full'>Add word</button>
         </form>
         <ul className='words-list'>
