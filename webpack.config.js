@@ -19,12 +19,15 @@ if (env === 'build') {
 }
 
 var config = {
-  entry: './src/index.js',
-  devtool: 'source-map',
+  entry: [
+    'babel-polyfill',
+    './src/index.js'
+  ],
   output: {
     filename: outputFile,
     path: __dirname + '/public'
   },
+  devtool: 'source-map',
   module: {
     loaders: [
       {

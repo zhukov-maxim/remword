@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "description": "Remword",
   "main": "lib/index.js",
-  "dependencies": {},
   "author": {
     "name": "Maxim Zhukov",
     "email": "zhkv.mxm@gmail.com"
@@ -17,6 +16,9 @@
     "dev": "WEBPACK_ENV=dev ./node_modules/.bin/webpack --devtool eval --watch --inline --progress --colors",
     "build": "WEBPACK_ENV=build ./node_modules/.bin/webpack --progress --colors",
     "deploy": "npm run build && firebase deploy && firebase open"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.1.19"
   },
   "devDependencies": {
     "babel-core": "^6.1.21",
