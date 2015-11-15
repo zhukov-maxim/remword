@@ -69,7 +69,7 @@ var config = {
 
 if (env === 'dev') {
   new WebpackDevServer(webpack(config), {
-    contentBase: 'public',
+    contentBase: 'dev',
     historyApiFallback: true, // Allows to navigate to specific route from url
     hot: true,
     debug: true
