@@ -29,8 +29,12 @@ var config = {
     loaders: [
       {
         test: /(\.jsx|\.js)$/,
-        loader: 'babel',
-        exclude: /node_modules/
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        query: {
+          cacheDirectory: true,
+          presets: ['es2015', 'react']
+        }
       },
       {
         test: /(\.jsx|\.js)$/,
