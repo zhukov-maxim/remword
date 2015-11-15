@@ -8,13 +8,16 @@ var appName = 'remword';
 var host = '0.0.0.0';
 var port = '9000';
 var env = process.env.WEBPACK_ENV;
+var outputDir = '';
 
 var plugins = [new ExtractTextPlugin('styles.css')], outputFile;
 
 if (env === 'build') {
   plugins.push(new UglifyJsPlugin({ minimize: true }));
+  outputDir = '/public';
   outputFile = appName + '.min.js';
 } else {
+  outputDir = '/dev';
   outputFile = appName + '.js';
 }
 
@@ -25,7 +28,7 @@ var config = {
   ],
   output: {
     filename: outputFile,
-    path: __dirname + '/public'
+    path: __dirname + outputDir
   },
   devtool: 'source-map',
   module: {

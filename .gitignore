@@ -1,7 +1,10 @@
 # Build ...
 node_modules
 npm-debug.log
-public
+public/*
+!public/*.html
+dev/*
+!dev/*.html
 tmp
 lib
 
