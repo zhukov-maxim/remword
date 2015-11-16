@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactFireMixin from 'reactfire';
 
+import firebaseUtils from './utils/firebaseUtils';
 import {shuffleArray, selectRandomIndexes} from './utils/commonUtils';
-import storeWords from './utils/store';
+import getStore from './utils/store';
 
 import Spinner from './Spinner';
 
@@ -22,7 +23,7 @@ var Exercise = React.createClass({
   },
 
   componentWillMount: function () {
-    this.state.store = storeWords;
+    this.state.store = getStore(firebaseUtils.getUid());
     this.bindAsArray(this.state.store, 'words');
     this.state.store.once('value', this.handleDataLoaded);
   },

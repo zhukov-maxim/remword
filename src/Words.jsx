@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactFireMixin from 'reactfire';
 
-import storeWords from './utils/store';
+import firebaseUtils from './utils/firebaseUtils';
+import getStore from './utils/store';
 import { translate } from './utils/translation';
 
 var Words = React.createClass({
@@ -20,7 +21,7 @@ var Words = React.createClass({
   },
 
   componentWillMount: function () {
-    this.state.store = storeWords;
+    this.state.store = getStore(firebaseUtils.getUid());
     this.bindAsArray(this.state.store, 'words');
   },
 

@@ -1,10 +1,24 @@
 import Firebase from 'firebase';
-import firebaseUtils from './firebaseUtils';
 
 const appName = 'remword';
+let firebaseRefWords = null;
 
-const pathWords = 'https://' + appName + '.firebaseio.com/' + 'users/' + firebaseUtils.getUid() + '/' + 'words/';
+function connectToFirebase(uid) {
+  if (!uid) {
+    return;
+  }
 
-const firebaseRefWords = new Firebase(pathWords);
+  const pathWords = 'https://' + appName + '.firebaseio.com/' + 'users/' + uid + '/' + 'words/';
 
-export default firebaseRefWords;
+  firebaseRefWords = new Firebase(pathWords);
+}
+
+function getStore(uid) {
+  if (!firebaseRefWords) {
+    connectToFirebase(uid);
+  }
+
+  return firebaseRefWords;
+}
+
+export default getStore;

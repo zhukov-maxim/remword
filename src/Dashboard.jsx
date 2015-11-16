@@ -2,7 +2,7 @@ import React from 'react';
 import ReactFireMixin from 'reactfire';
 
 import firebaseUtils from './utils/firebaseUtils';
-import storeWords from './utils/store';
+import getStore from './utils/store';
 
 var Dashboard = React.createClass({
   displayName: 'Dashboard',
@@ -17,7 +17,7 @@ var Dashboard = React.createClass({
   },
 
   componentWillMount: function () {
-    this.state.store = storeWords;
+    this.state.store = getStore(firebaseUtils.getUid());
     this.bindAsArray(this.state.store, 'words');
   },
 
