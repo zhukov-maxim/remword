@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactFireMixin from 'reactfire';
-import Firebase from 'firebase';
 
-import firebaseUtils from './utils/firebaseUtils';
 import {shuffleArray, selectRandomIndexes} from './utils/commonUtils';
+import storeWords from './utils/store';
 
 import Spinner from './Spinner';
 
@@ -14,27 +13,22 @@ var Exercise = React.createClass({
 
   getInitialState: function () {
     return {
-      firebaseRef: null,
-      exerciseStarted: false,
-      items: [],
+      store: null,
+      words: [],
+      answers: [],
       question: null,
-      answers: []
+      exerciseStarted: false
     };
   },
 
   componentWillMount: function () {
-    var path = 'https://remword.firebaseio.com/' + 'users/' + firebaseUtils.getUid() + '/' + 'words/';
-
-    this.state.firebaseRef = new Firebase(path);
-
-    this.bindAsArray(this.state.firebaseRef, 'items');
-
-    // Fires after all array elements are loaded:
-    this.state.firebaseRef.once('value', this.handleDataLoaded);
+    this.state.store = storeWords;
+    this.bindAsArray(this.state.store, 'words');
+    this.state.store.once('value', this.handleDataLoaded);
   },
 
   componentWillUnmount: function () {
-    this.state.firebaseRef.off('value');
+    this.state.store.off('value');
   },
 
   handleDataLoaded: function () {
@@ -42,7 +36,7 @@ var Exercise = React.createClass({
   },
 
   startExercise: function () {
-    const wordsNumber = this.state.items.length;
+    const wordsNumber = this.state.words.length;
     const answersNumber = 4;
 
     let answers = selectRandomIndexes(0, wordsNumber - 1, answersNumber);
@@ -60,17 +54,17 @@ var Exercise = React.createClass({
   validateAnswer: function (i) {
     if (i === this.state.question) {
       const wordIndex = i;
-      const key = this.state.items[wordIndex]['.key'];
-      const hits = ++this.state.items[wordIndex].hits;
+      const key = this.state.words[wordIndex]['.key'];
+      const hits = ++this.state.words[wordIndex].hits;
 
-      this.state.firebaseRef.child(key).update({ hits: hits });
+      this.state.store.child(key).update({ hits: hits });
       this.startExercise();
     } else {
       const wordIndex = this.state.question;
-      const key = this.state.items[wordIndex]['.key'];
-      const misses = ++this.state.items[wordIndex].misses;
+      const key = this.state.words[wordIndex]['.key'];
+      const misses = ++this.state.words[wordIndex].misses;
 
-      this.state.firebaseRef.child(key).update({ misses: misses });
+      this.state.store.child(key).update({ misses: misses });
       this.reshuffleAnswers();
     }
   },
@@ -83,7 +77,7 @@ var Exercise = React.createClass({
           key={i}
           onClick={this.validateAnswer.bind(this, i)}
         >
-          {this.state.items[i].translation}
+          {this.state.words[i].translation}
         </button>
       );
     };
@@ -95,7 +89,7 @@ var Exercise = React.createClass({
     } else {
       exercise = (
         <div className = 'exercise'>
-          <h1 className='exercise__question'>{this.state.items[this.state.question].name}</h1>
+          <h1 className='exercise__question'>{this.state.words[this.state.question].name}</h1>
           {this.state.answers.map(createAnswerButton)}
         </div>
       );

@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactFireMixin from 'reactfire';
-import Firebase from 'firebase';
 
-import firebaseUtils from './utils/firebaseUtils';
+import storeWords from './utils/store';
 import { translate } from './utils/translation';
 
 var Words = React.createClass({
@@ -12,7 +11,8 @@ var Words = React.createClass({
 
   getInitialState: function () {
     return {
-      items: [],
+      store: null,
+      words: [],
       newWordName: '',
       newWordTranslation: '',
       translatedByYandex: false
@@ -20,10 +20,8 @@ var Words = React.createClass({
   },
 
   componentWillMount: function () {
-    var path = 'https://remword.firebaseio.com/users/' + firebaseUtils.getUid() + '/words/';
-    var firebaseRef = new Firebase(path);
-
-    this.bindAsArray(firebaseRef, 'items');
+    this.state.store = storeWords;
+    this.bindAsArray(this.state.store, 'words');
   },
 
   onChangeName: function (e) {
@@ -65,7 +63,7 @@ var Words = React.createClass({
 
     let currentTime = (new Date()).getTime(); // Firebase does not support Date objects
 
-    this.firebaseRefs['items'].push({
+    this.firebaseRefs['words'].push({
       date: currentTime,
       hits: 0,
       misses: 0,
@@ -80,10 +78,7 @@ var Words = React.createClass({
   },
 
   deleteItem: function (key) {
-    var path = 'https://remword.firebaseio.com/users/' + firebaseUtils.getUid() + '/words/';
-    var firebaseRef = new Firebase(path);
-
-    firebaseRef.child(key).remove();
+    this.state.store.child(key).remove();
   },
 
   render: function () {
@@ -137,7 +132,7 @@ var Words = React.createClass({
           <button className='button-full'>Add word</button>
         </form>
         <ul className='words-list'>
-          {this.state.items.map(createItem)}
+          {this.state.words.map(createItem)}
         </ul>
       </div>
     );

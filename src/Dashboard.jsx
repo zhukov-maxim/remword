@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactFireMixin from 'reactfire';
-import Firebase from 'firebase';
 
 import firebaseUtils from './utils/firebaseUtils';
+import storeWords from './utils/store';
 
 var Dashboard = React.createClass({
   displayName: 'Dashboard',
@@ -11,16 +11,14 @@ var Dashboard = React.createClass({
 
   getInitialState: function () {
     return {
-      firebaseRef: null,
+      store: null,
       words: []
     };
   },
 
   componentWillMount: function () {
-    var path = 'https://remword.firebaseio.com/' + 'users/' + firebaseUtils.getUid() + '/' + 'words/';
-
-    this.state.firebaseRef = new Firebase(path);
-    this.bindAsArray(this.state.firebaseRef, 'words');
+    this.state.store = storeWords;
+    this.bindAsArray(this.state.store, 'words');
   },
 
   render: function () {
