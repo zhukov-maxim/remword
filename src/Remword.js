@@ -18,14 +18,14 @@ var Remword = React.createClass({
     };
   },
 
+  componentWillMount: function() {
+    firebaseUtils.onChange = this.handleLogout;
+  },
+
   handleLogout: function(loggedIn) {
     this.setState({
       loggedIn: loggedIn,
     });
-  },
-
-  componentWillMount: function() {
-    firebaseUtils.onChange = this.handleLogout;
   },
 
   render: function() {
@@ -35,7 +35,7 @@ var Remword = React.createClass({
       loginOrOut = (
         <li className='main-menu__item'>
           <Link className='main-menu__link' to='logout'>
-            Logout
+            {'Logout'}
           </Link>
         </li>
       );
@@ -43,7 +43,7 @@ var Remword = React.createClass({
       loginOrOut = (
         <li className='main-menu__item'>
           <Link className='main-menu__link' to='login'>
-            Login
+            {'Login'}
           </Link>
         </li>
       );
@@ -54,17 +54,17 @@ var Remword = React.createClass({
         <ul className='main-menu'>
           <li className='main-menu__item'>
             <Link className='main-menu__link' to='/'>
-              Dashboard
+              {'Dashboard'}
             </Link>
           </li>
           <li className='main-menu__item'>
             <Link className='main-menu__link' to='words'>
-              Words
+              {'Words'}
             </Link>
           </li>
           <li className='main-menu__item'>
             <Link className='main-menu__link' to='exercise'>
-              Exercise
+              {'Exercise'}
             </Link>
           </li>
           {loginOrOut}

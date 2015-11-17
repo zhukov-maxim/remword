@@ -17,8 +17,11 @@ var Dashboard = React.createClass({
   },
 
   componentWillMount: function() {
-    this.state.store = getStore(firebaseUtils.getUid());
-    this.bindAsArray(this.state.store, 'words');
+    this.setState({
+      store: getStore(firebaseUtils.getUid()),
+    }, function() {
+      this.bindAsArray(this.state.store, 'words');
+    });
   },
 
   render: function() {
@@ -34,18 +37,18 @@ var Dashboard = React.createClass({
 
     return (
       <div className = 'dashboard'>
-        <h1 className='dashboard__header'>Welcome to the Remword</h1>
+        <h1 className='dashboard__header'>{'Welcome to the Remword'}</h1>
         <p>
-          Logged in as: <span>{userEmail}</span>
+          {'Logged in as: '}<span>{userEmail}</span>
         </p>
         <p>
-          Words number: <span className='dashboard__info'>{wordsNumber}</span>
+          {'Words number: '}<span className='dashboard__info'>{wordsNumber}</span>
         </p>
         <p>
-          Correct answers: <span className='dashboard__correct'>{hits}</span>
+          {'Correct answers: '}<span className='dashboard__correct'>{hits}</span>
         </p>
         <p>
-          Wrong answers: <span className='dashboard__wrong'>{misses}</span>
+          {'Wrong answers: '}<span className='dashboard__wrong'>{misses}</span>
         </p>
       </div>
     );

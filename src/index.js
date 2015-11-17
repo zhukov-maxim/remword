@@ -27,33 +27,36 @@ function clearAttemptedTransition() {
 
 render((
   <Router history={history}>
-    <Route path='/' component={Remword}>
+    <Route
+      component={Remword}
+      path='/'
+    >
       <IndexRoute
         component={Dashboard}
         onEnter={requireAuth}
       />
       <Route
-        path='words'
         component={Words}
+        path='words'
         onEnter={requireAuth}
       />
       <Route
-        path='exercise'
         component={Exercise}
+        path='exercise'
         onEnter={requireAuth}
       />
       <Route
-        path='login'
         component={Login}
+        path='login'
         onLeave={clearAttemptedTransition}
       />
       <Route
-        path='logout'
         component={Logout}
+        path='logout'
       />
       <Route
-        path='register'
         component={Register}
+        path='register'
       />
     </Route>
   </Router>

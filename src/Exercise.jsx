@@ -23,9 +23,12 @@ var Exercise = React.createClass({
   },
 
   componentWillMount: function() {
-    this.state.store = getStore(firebaseUtils.getUid());
-    this.bindAsArray(this.state.store, 'words');
-    this.state.store.once('value', this.handleDataLoaded);
+    this.setState({
+      store: getStore(firebaseUtils.getUid()),
+    }, function() {
+      this.bindAsArray(this.state.store, 'words');
+      this.state.store.once('value', this.handleDataLoaded);
+    });
   },
 
   componentWillUnmount: function() {

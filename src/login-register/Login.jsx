@@ -33,29 +33,33 @@ var Login = React.createClass({
   },
 
   render: function() {
-    var errors = this.state.error ? <p> Error on Login </p> : '';
+    var errors = this.state.error ? <p>{'Error on Login'}</p> : '';
 
     return (
       <div className='auth'>
-        <h1 className='auth__header'>Login</h1>
+        <h1 className='auth__header'>{'Login'}</h1>
         <form className='auth__form' onSubmit={this.handleSubmit}>
           <div>
-            <label>Email:</label>
-            <input ref='email' placeholder='Email' defaultValue='a@b.com' />
-          </div>
-          <div>
-            <label>Password:</label>
+            <label>{'Email:'}</label>
             <input
-              ref='pw'
-              type='password'
-              placeholder='Password'
-              defaultValue='123'
+              defaultValue='a@b.com'
+              placeholder='Email'
+              ref='email'
             />
           </div>
-          <button className='auth__button' type='submit'>Login</button>
+          <div>
+            <label>{'Password:'}</label>
+            <input
+              defaultValue='123'
+              placeholder='Password'
+              ref='pw'
+              type='password'
+            />
+          </div>
+          <button className='auth__button' type='submit'>{'Login'}</button>
           {errors}
         </form>
-        <p><Link to='Register'>Not registered yet?</Link></p>
+        <p><Link to='Register'>{'Not registered yet?'}</Link></p>
       </div>
     );
   },

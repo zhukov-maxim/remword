@@ -4,7 +4,7 @@ var Spinner = React.createClass({
   displayName: 'Spinner',
 
   render: function() {
-    return <div className = 'spinner'>Spinner</div>;
+    return <div className = 'spinner'>{'Spinner'}</div>;
   },
 });
 

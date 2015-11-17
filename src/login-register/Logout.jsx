@@ -11,8 +11,8 @@ var Logout = React.createClass({
   render: function() {
     return (
       <div>
-        <h1 className='auth__header'>You are now logged out</h1>
-        <p>We hope to see you soon.</p>
+        <h1 className='auth__header'>{'You are now logged out'}</h1>
+        <p>{'We hope to see you soon.'}</p>
       </div>
     );
   },

@@ -21,8 +21,11 @@ var Words = React.createClass({
   },
 
   componentWillMount: function() {
-    this.state.store = getStore(firebaseUtils.getUid());
-    this.bindAsArray(this.state.store, 'words');
+    this.setState({
+      store: getStore(firebaseUtils.getUid()),
+    }, function() {
+      this.bindAsArray(this.state.store, 'words');
+    });
   },
 
   onChangeName: function(e) {
@@ -91,13 +94,15 @@ var Words = React.createClass({
           className = 'word'
           key = {index}
         >
-          {item.name} - {item.translation}
+          {item.name}
+          {' — '}
+          {item.translation}
           <button
             className = 'button-remove'
             key = {index}
             onClick = {this.deleteItem.bind(null, item['.key'])}
           >
-          {String.fromCharCode(10006) /* Cross sign */ }
+          {String.fromCharCode(10006)}
           </button>
         </li>
       );
@@ -108,7 +113,7 @@ var Words = React.createClass({
         className='words__powered-by'
         href='http://translate.yandex.com/'
       >
-        Powered by Yandex.Translate
+        {'Powered by Yandex.Translate'}
       </a>
     );
 
@@ -116,27 +121,29 @@ var Words = React.createClass({
       <div className='words'>
         <form onSubmit = {this.handleSubmit}>
           <input
-            onChange = {this.onChangeName}
             placeholder = 'Enter new word here...'
             value = {this.state.newWordName}
+            onChange = {this.onChangeName}
           />
           <button
             className = 'words__button_translate'
             onClick = {this.handleTranslate}
           >
-            Translate
+            {'Translate'}
           </button>
           <input
-            onChange = {this.onChangeTranslation}
             placeholder = 'Enter translation here...'
             value = {this.state.newWordTranslation}
+            onChange = {this.onChangeTranslation}
           />
           {
             this.state.translatedByYandex ?
               translatedByYandexNotification :
               false
           }
-          <button className='button-full'>Add word</button>
+          <button className='button-full'>
+            {'Add word'}
+          </button>
         </form>
         <ul className='words-list'>
           {this.state.words.map(createItem)}
