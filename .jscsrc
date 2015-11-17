@@ -1,0 +1,9 @@
+{
+  "preset": "airbnb",
+  "fileExtensions": [".js", ".jsx"],
+  "excludeFiles": ["dev/**", "node_modules/**", "dev/**"],
+  "maximumLineLength": {
+    "value": 80,
+    "allExcept": ["comments", "regex"]
+  }
+}

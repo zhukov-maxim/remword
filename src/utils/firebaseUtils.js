@@ -3,19 +3,20 @@ var forge = 'https://remword.firebaseio.com';
 var ref = new Firebase(forge);
 var cachedUser = null;
 
-var addNewUserToFB = function (newUser) {
+var addNewUserToFB = function(newUser) {
   var key = newUser.uid;
 
   ref.child('users').child(key).set(newUser);
 };
 
 var firebaseUtils = {
-  createUser: function (user, cb) {
-    ref.createUser(user, function (err) {
+  createUser: function(user, cb) {
+    ref.createUser(user, function(err) {
       if (err) {
         switch (err.code) {
           case 'EMAIL_TAKEN':
-            console.log('The new user account cannot be created because the email is already in use.');
+            console.log('The new user account cannot be created because' +
+                          'the email is already in use.');
             break;
           case 'INVALID_EMAIL':
             console.log('The specified email is not a valid email.');
@@ -24,19 +25,19 @@ var firebaseUtils = {
             console.log('Error creating user:', err);
         }
       } else {
-        this.loginWithPW(user, function (authData) {
+        this.loginWithPW(user, function(authData) {
           addNewUserToFB({
             email: user.email,
             uid: authData.uid,
-            token: authData.token
+            token: authData.token,
           });
         }, cb);
       }
     }.bind(this));
   },
 
-  loginWithPW: function (userObj, cb, cbOnRegister) {
-    ref.authWithPassword(userObj, function (err, authData) {
+  loginWithPW: function(userObj, cb, cbOnRegister) {
+    ref.authWithPassword(userObj, function(err, authData) {
       if (err) {
         console.log('Error on login:', err.message);
         cbOnRegister && cbOnRegister(false);
@@ -50,11 +51,11 @@ var firebaseUtils = {
     }.bind(this));
   },
 
-  cacheUser: function () {
+  cacheUser: function() {
     cachedUser = ref.getAuth();
   },
 
-  isLoggedIn: function () {
+  isLoggedIn: function() {
     if (!cachedUser) {
       this.cacheUser();
     }
@@ -62,7 +63,7 @@ var firebaseUtils = {
     return (cachedUser && true) || false;
   },
 
-  getUserEmail: function () {
+  getUserEmail: function() {
     if (!cachedUser) {
       this.cacheUser();
     }
@@ -70,7 +71,7 @@ var firebaseUtils = {
     return cachedUser.password.email;
   },
 
-  getUid: function () {
+  getUid: function() {
     if (!cachedUser) {
       this.cacheUser();
     }
@@ -78,11 +79,11 @@ var firebaseUtils = {
     return cachedUser.uid;
   },
 
-  logout: function () {
+  logout: function() {
     ref.unauth();
     cachedUser = null;
     this.onChange(false);
-  }
+  },
 };
 
 export default firebaseUtils;

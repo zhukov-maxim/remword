@@ -8,7 +8,8 @@ function connectToFirebase(uid) {
     return;
   }
 
-  const pathWords = 'https://' + appName + '.firebaseio.com/' + 'users/' + uid + '/' + 'words/';
+  const pathWords = 'https://' + appName + '.firebaseio.com/' + 'users/' +
+                      uid + '/' + 'words/';
 
   firebaseRefWords = new Firebase(pathWords);
 }

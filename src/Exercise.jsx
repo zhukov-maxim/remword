@@ -12,31 +12,31 @@ var Exercise = React.createClass({
 
   mixins: [ReactFireMixin],
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       store: null,
       words: [],
       answers: [],
       question: null,
-      exerciseStarted: false
+      exerciseStarted: false,
     };
   },
 
-  componentWillMount: function () {
+  componentWillMount: function() {
     this.state.store = getStore(firebaseUtils.getUid());
     this.bindAsArray(this.state.store, 'words');
     this.state.store.once('value', this.handleDataLoaded);
   },
 
-  componentWillUnmount: function () {
+  componentWillUnmount: function() {
     this.state.store.off('value');
   },
 
-  handleDataLoaded: function () {
+  handleDataLoaded: function() {
     this.startExercise();
   },
 
-  startExercise: function () {
+  startExercise: function() {
     const wordsNumber = this.state.words.length;
     const answersNumber = 4;
 
@@ -48,11 +48,11 @@ var Exercise = React.createClass({
     this.setState({exerciseStarted: true});
   },
 
-  reshuffleAnswers: function () {
+  reshuffleAnswers: function() {
     this.setState({answers: shuffleArray(this.state.answers)});
   },
 
-  validateAnswer: function (i) {
+  validateAnswer: function(i) {
     if (i === this.state.question) {
       const wordIndex = i;
       const key = this.state.words[wordIndex]['.key'];
@@ -70,7 +70,7 @@ var Exercise = React.createClass({
     }
   },
 
-  render: function () {
+  render: function() {
     var createAnswerButton = i => {
       return (
         <button
@@ -90,14 +90,16 @@ var Exercise = React.createClass({
     } else {
       exercise = (
         <div className = 'exercise'>
-          <h1 className='exercise__question'>{this.state.words[this.state.question].name}</h1>
+          <h1 className='exercise__question'>
+            {this.state.words[this.state.question].name}
+          </h1>
           {this.state.answers.map(createAnswerButton)}
         </div>
       );
     }
 
     return exercise;
-  }
+  },
 });
 
 export default Exercise;

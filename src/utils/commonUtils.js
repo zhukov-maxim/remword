@@ -2,7 +2,9 @@
 function shuffleArray(array) {
   let shuffledArray = array.slice();
 
-  let m = shuffledArray.length, t, i;
+  let m = shuffledArray.length;
+  let t;
+  let i;
 
   // While there remain elements to shuffle…
   while (m) {
@@ -24,7 +26,7 @@ function shuffleArray(array) {
 function fillArrayWithNumbers(n) {
   let array = Array.apply(null, Array(n));
 
-  return array.map(function (x, i) { return i; });
+  return array.map(function(x, i) { return i; });
 }
 
 function selectRandomIndexes(firstIndex, lastIndex, number) {

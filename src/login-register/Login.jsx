@@ -8,22 +8,22 @@ var Login = React.createClass({
   displayName: 'Login',
 
   statics: {
-    attemptedTransition: null
+    attemptedTransition: null,
   },
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
-      error: false
+      error: false,
     };
   },
 
-  handleSubmit: function (e) {
+  handleSubmit: function(e) {
     e.preventDefault();
 
     var email = this.refs.email.value;
     var pw = this.refs.pw.value;
 
-    firebaseUtils.loginWithPW({email: email, password: pw}, function () {
+    firebaseUtils.loginWithPW({email: email, password: pw}, function() {
       if (Login.attemptedTransition) {
         history.replaceState(null, Login.attemptedTransition.location.pathname);
       } else {
@@ -32,7 +32,7 @@ var Login = React.createClass({
     });
   },
 
-  render: function () {
+  render: function() {
     var errors = this.state.error ? <p> Error on Login </p> : '';
 
     return (
@@ -45,7 +45,12 @@ var Login = React.createClass({
           </div>
           <div>
             <label>Password:</label>
-            <input ref='pw' type='password' placeholder='Password' defaultValue='123' />
+            <input
+              ref='pw'
+              type='password'
+              placeholder='Password'
+              defaultValue='123'
+            />
           </div>
           <button className='auth__button' type='submit'>Login</button>
           {errors}
@@ -53,7 +58,7 @@ var Login = React.createClass({
         <p><Link to='Register'>Not registered yet?</Link></p>
       </div>
     );
-  }
+  },
 });
 
 export default Login;

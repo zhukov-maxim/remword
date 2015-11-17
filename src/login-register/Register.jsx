@@ -6,20 +6,20 @@ import firebaseUtils from '../utils/firebaseUtils';
 var Register = React.createClass({
   displayName: 'Register',
 
-  handleSubmit: function (e) {
+  handleSubmit: function(e) {
     e.preventDefault();
 
     var email = this.refs.email.value;
     var pw = this.refs.pw.value;
 
-    firebaseUtils.createUser({email: email, password: pw}, function (result) {
+    firebaseUtils.createUser({email: email, password: pw}, function(result) {
       if (result) {
         history.replaceState(null, '/');
       }
     });
   },
 
-  render: function () {
+  render: function() {
     return (
       <div className='auth'>
         <h1 className='auth__header'>Register</h1>
@@ -36,7 +36,7 @@ var Register = React.createClass({
         </form>
       </div>
     );
-  }
+  },
 });
 
 export default Register;

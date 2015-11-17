@@ -10,79 +10,81 @@ var Words = React.createClass({
 
   mixins: [ReactFireMixin],
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       store: null,
       words: [],
       newWordName: '',
       newWordTranslation: '',
-      translatedByYandex: false
+      translatedByYandex: false,
     };
   },
 
-  componentWillMount: function () {
+  componentWillMount: function() {
     this.state.store = getStore(firebaseUtils.getUid());
     this.bindAsArray(this.state.store, 'words');
   },
 
-  onChangeName: function (e) {
+  onChangeName: function(e) {
     this.setState({newWordName: e.target.value});
   },
 
-  onChangeTranslation: function (e) {
+  onChangeTranslation: function(e) {
     this.setState({
       newWordTranslation: e.target.value,
-      translatedByYandex: false
+      translatedByYandex: false,
     });
   },
 
-  handleTranslate: function (e) {
+  handleTranslate: function(e) {
     e.preventDefault();
 
     const word = this.state.newWordName;
     const minimumWordLength = 2;
 
     if (word && word.length >= minimumWordLength) {
-      translate(word, function (data) {
+      translate(word, function(data) {
         this.setState({
           newWordTranslation: data,
-          translatedByYandex: true
+          translatedByYandex: true,
         });
       }.bind(this));
     }
   },
 
-  handleSubmit: function (e) {
+  handleSubmit: function(e) {
     e.preventDefault();
 
     if (!this.state.newWordName || this.state.newWordName.trim().length === 0) {
       return;
     }
-    if (!this.state.newWordTranslation || this.state.newWordTranslation.trim().length === 0) {
+
+    if (!this.state.newWordTranslation ||
+          this.state.newWordTranslation.trim().length === 0) {
       return;
     }
 
     let currentTime = (new Date()).getTime(); // Firebase does not support Date objects
 
-    this.firebaseRefs['words'].push({
+    this.firebaseRefs.words.push({
       date: currentTime,
       hits: 0,
       misses: 0,
       name: this.state.newWordName,
-      translation: this.state.newWordTranslation
+      translation: this.state.newWordTranslation,
     });
     this.setState({
       newWordName: '',
       newWordTranslation: '',
-      translatedByYandex: false
+      translatedByYandex: false,
     });
   },
 
-  deleteItem: function (key) {
+  deleteItem: function(key) {
     this.state.store.child(key).remove();
   },
 
-  render: function () {
+  render: function() {
     var createItem = (item, index) => {
       return (
         <li
@@ -129,7 +131,11 @@ var Words = React.createClass({
             placeholder = 'Enter translation here...'
             value = {this.state.newWordTranslation}
           />
-          {this.state.translatedByYandex ? translatedByYandexNotification : false}
+          {
+            this.state.translatedByYandex ?
+              translatedByYandexNotification :
+              false
+          }
           <button className='button-full'>Add word</button>
         </form>
         <ul className='words-list'>
@@ -137,7 +143,7 @@ var Words = React.createClass({
         </ul>
       </div>
     );
-  }
+  },
 });
 
 export default Words;

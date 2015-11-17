@@ -28,12 +28,33 @@ function clearAttemptedTransition() {
 render((
   <Router history={history}>
     <Route path='/' component={Remword}>
-      <IndexRoute component={Dashboard} onEnter={requireAuth} />
-      <Route path='words' component={Words} onEnter={requireAuth} />
-      <Route path='exercise' component={Exercise} onEnter={requireAuth} />
-      <Route path='login' component={Login} onLeave={clearAttemptedTransition} />
-      <Route path='logout' component={Logout} />
-      <Route path='register' component={Register} />
+      <IndexRoute
+        component={Dashboard}
+        onEnter={requireAuth}
+      />
+      <Route
+        path='words'
+        component={Words}
+        onEnter={requireAuth}
+      />
+      <Route
+        path='exercise'
+        component={Exercise}
+        onEnter={requireAuth}
+      />
+      <Route
+        path='login'
+        component={Login}
+        onLeave={clearAttemptedTransition}
+      />
+      <Route
+        path='logout'
+        component={Logout}
+      />
+      <Route
+        path='register'
+        component={Register}
+      />
     </Route>
   </Router>
 ), document.getElementById('viewport'));

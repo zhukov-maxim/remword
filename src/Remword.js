@@ -9,40 +9,64 @@ var Remword = React.createClass({
   displayName: 'Remword',
 
   propTypes: {
-    children: React.PropTypes.element.isRequired
+    children: React.PropTypes.element.isRequired,
   },
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
-      loggedIn: firebaseUtils.isLoggedIn()
+      loggedIn: firebaseUtils.isLoggedIn(),
     };
   },
 
-  handleLogout: function (loggedIn) {
+  handleLogout: function(loggedIn) {
     this.setState({
-      loggedIn: loggedIn
+      loggedIn: loggedIn,
     });
   },
 
-  componentWillMount: function () {
+  componentWillMount: function() {
     firebaseUtils.onChange = this.handleLogout;
   },
 
-  render: function () {
+  render: function() {
     var loginOrOut;
 
     if (this.state.loggedIn) {
-      loginOrOut = <li className='main-menu__item'><Link className='main-menu__link' to='logout'>Logout</Link></li>;
+      loginOrOut = (
+        <li className='main-menu__item'>
+          <Link className='main-menu__link' to='logout'>
+            Logout
+          </Link>
+        </li>
+      );
     } else {
-      loginOrOut = <li className='main-menu__item'><Link className='main-menu__link' to='login'>Login</Link></li>;
+      loginOrOut = (
+        <li className='main-menu__item'>
+          <Link className='main-menu__link' to='login'>
+            Login
+          </Link>
+        </li>
+      );
     }
 
     return (
       <div className='remword'>
         <ul className='main-menu'>
-          <li className='main-menu__item'><Link className='main-menu__link' to='/'>Dashboard</Link></li>
-          <li className='main-menu__item'><Link className='main-menu__link' to='words'>Words</Link></li>
-          <li className='main-menu__item'><Link className='main-menu__link' to='exercise'>Exercise</Link></li>
+          <li className='main-menu__item'>
+            <Link className='main-menu__link' to='/'>
+              Dashboard
+            </Link>
+          </li>
+          <li className='main-menu__item'>
+            <Link className='main-menu__link' to='words'>
+              Words
+            </Link>
+          </li>
+          <li className='main-menu__item'>
+            <Link className='main-menu__link' to='exercise'>
+              Exercise
+            </Link>
+          </li>
           {loginOrOut}
         </ul>
         <div className='remword__outlet'>
@@ -50,7 +74,7 @@ var Remword = React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });
 
 export default Remword;
