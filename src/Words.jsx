@@ -117,6 +117,8 @@ var Words = React.createClass({
       </a>
     );
 
+    var reversedWordList = this.state.words.slice().reverse();
+
     return (
       <div className='words'>
         <form onSubmit = {this.handleSubmit}>
@@ -146,7 +148,7 @@ var Words = React.createClass({
           </button>
         </form>
         <ul className='words-list'>
-          {this.state.words.map(createItem)}
+          {reversedWordList.map(createItem)}
         </ul>
       </div>
     );
