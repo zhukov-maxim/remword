@@ -13,7 +13,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "dev": "WEBPACK_ENV=dev ./node_modules/.bin/webpack --devtool eval --watch --inline --progress --colors",
+    "dev": "WEBPACK_ENV=dev ./node_modules/.bin/webpack-dev-server --progress --hot --inline",
     "build": "WEBPACK_ENV=build ./node_modules/.bin/webpack --progress --colors",
     "deploy": "npm run build && firebase deploy && firebase open"
   },
@@ -41,7 +41,6 @@
     "react-router": "^1.0.0-rc4",
     "reactfire": "^0.5.1",
     "style-loader": "^0.13.0",
-    "watch": "0.16.0",
     "webpack": "1.12.5",
     "webpack-dev-server": "1.12.1"
   }
