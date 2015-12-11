@@ -47,6 +47,9 @@ Session.vim
 *~
 
 
+### Idea ###
+.idea
+
 ### SublimeText ###
 # cache files for sublime text
 *.tmlanguage.cache
