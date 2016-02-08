@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/zhukov-maxim/remword.git"
+    "url": "https://bitbucket.org/zhmax/remword-redux"
   },
   "license": "MIT",
   "scripts": {
@@ -41,6 +41,8 @@
     "react-router": "^1.0.0-rc4",
     "reactfire": "^0.5.1",
     "style-loader": "^0.13.0",
+    "webdrivercss": "^1.1.9",
+    "webdriverio": "2.4.5",
     "webpack": "1.12.5",
     "webpack-dev-server": "1.12.1"
   }
